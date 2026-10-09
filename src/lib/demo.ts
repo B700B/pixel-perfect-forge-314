@@ -44,7 +44,7 @@ export function demoEmail(i: EmailInput): string {
       : i.length === "Medium"
         ? [opener[i.tone], core + " " + detail, cta[i.tone]]
         : [opener[i.tone], core, detail, extra.join(" "), cta[i.tone]];
-  const subjBase = cap(purpose.split(/[,.;]/)[0].split(" ").slice(0, 7).join(" "));
+  const subjBase = cap((purpose.split(/[,.;]/)[0] ?? "").split(" ").slice(0, 7).join(" "));
   const subject = i.tone === "Formal" ? `Regarding: ${subjBase}` : i.tone === "Persuasive" ? `Proposal: ${subjBase}` : subjBase;
   return `Subject: ${subject}\n\n${greet}\n\n${paras.join("\n\n")}\n\n${signoff}\n[Your name]`;
 }
@@ -65,7 +65,7 @@ export function demoMeeting(notes: string): string {
   const rows = actions.map((a) => {
     const owner = a.match(OWNER_RE)?.[1] ?? "Not specified";
     const dl = a.match(DEADLINE_RE);
-    const deadline = dl ? cap(dl[2]) : "Not specified";
+    const deadline = dl ? cap(dl[2] ?? "") : "Not specified";
     const priority = /urgent|asap|critical|blocker|immediately/i.test(a) ? "High" : dl ? "Medium" : "Low";
     return { task: a.replace(/\|/g, "/"), owner, deadline, priority };
   });

@@ -46,13 +46,13 @@ function MeetingsPage() {
         ? await runRefine({ system: PROMPTS.meeting, previous: out, instruction: refine, onToken })
         : await runAI({ system: PROMPTS.meeting, user: `Meeting notes:\n"""\n${notes}\n"""`, demo: () => demoMeeting(notes), onToken });
       setOut(text);
-      addHistory({ tool: "meeting", title: notes.split("\n")[0].slice(0, 60) || "Meeting summary", output: text, minutesSaved: 15 });
+      addHistory({ tool: "meeting", title: (notes.split("\n")[0] ?? "").slice(0, 60) || "Meeting summary", output: text, minutesSaved: 15 });
     } catch { /* toast shown */ } finally { setLoading(false); setStreaming(false); }
   }
 
   function onFile(f?: File) {
     if (!f) return;
-    if (!f.name.endsWith(".txt") && f.type !== "text/plain") return toast.error("Please upload a .txt file");
+    if (!f.name.endsWith(".txt") && f.type !== "text/plain") { toast.error("Please upload a .txt file"); return; }
     f.text().then((t) => { setNotes(t); toast.success(`Loaded ${f.name}`); });
   }
 

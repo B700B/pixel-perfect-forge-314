@@ -89,7 +89,7 @@ export function download(filename: string, content: string, type = "text/plain")
 
 export function printText(title: string, content: string) {
   const w = window.open("", "_blank");
-  if (!w) return toast.error("Allow pop-ups to print.");
+  if (!w) { toast.error("Allow pop-ups to print."); return; }
   const esc = content.replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" })[c]!);
   w.document.write(
     `<html><head><title>${title}</title></head><body style="font-family:system-ui;padding:32px;max-width:800px;margin:auto"><h2>${title}</h2><pre style="white-space:pre-wrap;font-family:inherit;line-height:1.6">${esc}</pre><p style="color:#777;font-size:12px;margin-top:32px">AI-generated content — reviewed by a human before use.</p></body></html>`,

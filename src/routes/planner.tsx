@@ -34,7 +34,7 @@ const newTask = (name = "", duration = 60, u: "High" | "Low" = "High", i: "High"
 
 interface Block { day: string; start: string; end: string; label: string; quadrant: string }
 
-const toMin = (t: string) => { const [h, m] = t.split(":").map(Number); return h * 60 + (m || 0); };
+const toMin = (t: string) => { const [h, m] = t.split(":").map(Number); return (h ?? 0) * 60 + (m || 0); };
 const toTime = (n: number) => `${String(Math.floor(n / 60)).padStart(2, "0")}:${String(n % 60).padStart(2, "0")}`;
 
 function buildSchedule(tasks: PlanTask[], start: string, end: string, type: string) {
@@ -49,9 +49,9 @@ function buildSchedule(tasks: PlanTask[], start: string, end: string, type: stri
   for (const t of sorted) {
     while (d < days.length && cur + t.duration > endM) { d++; cur = toMin(start); }
     if (d >= days.length || t.duration > endM - toMin(start)) { overflow.push(t); continue; }
-    blocks.push({ day: days[d], start: toTime(cur), end: toTime(cur + t.duration), label: t.name, quadrant: Q[qi(t)].title });
+    blocks.push({ day: days[d] ?? "", start: toTime(cur), end: toTime(cur + t.duration), label: t.name, quadrant: (Q[qi(t)]?.title ?? "") });
     cur += t.duration;
-    if (cur + 10 <= endM) { blocks.push({ day: days[d], start: toTime(cur), end: toTime(cur + 10), label: "Break", quadrant: "" }); cur += 10; }
+    if (cur + 10 <= endM) { blocks.push({ day: days[d] ?? "", start: toTime(cur), end: toTime(cur + 10), label: "Break", quadrant: "" }); cur += 10; }
   }
   return { blocks, overflow };
 }
