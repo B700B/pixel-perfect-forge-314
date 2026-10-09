@@ -89,7 +89,7 @@ export function demoMeeting(notes: string): string {
     "",
     "## Upcoming Deadlines",
     ...(rows.some((r) => r.deadline !== "Not specified")
-      ? rows.filter((r) => r.deadline !== "Not specified").map((r) => `- <mark>**${r.deadline}**</mark> — ${r.task} (${r.owner})`)
+      ? rows.filter((r) => r.deadline !== "Not specified").map((r) => `- **⏰ ${r.deadline}** — ${r.task} (${r.owner})`)
       : ["- No deadlines were stated in the notes."]),
   ];
   return out.join("\n");
