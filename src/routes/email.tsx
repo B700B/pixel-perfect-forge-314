@@ -29,7 +29,7 @@ const LENGTHS = ["Short", "Medium", "Detailed"] as const;
 
 function split(text: string) {
   const m = text.match(/^\s*\**subject:?\**\s*(.+)\n+([\s\S]*)$/i);
-  return m ? { subject: m[1].trim(), body: m[2].trim() } : { subject: "", body: text.trim() };
+  return m ? { subject: (m[1] ?? "").trim(), body: (m[2] ?? "").trim() } : { subject: "", body: text.trim() };
 }
 
 function EmailPage() {
