@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { Mail, RefreshCw, Minimize2, Briefcase, Sparkles as _unused } from "lucide-react";
+import { Mail, RefreshCw, Minimize2, Briefcase } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -10,7 +10,6 @@ import { runAI, runRefine } from "@/lib/aiService";
 import { demoEmail, type EmailInput } from "@/lib/demo";
 import { addHistory } from "@/lib/storage";
 
-void _unused;
 
 export const Route = createFileRoute("/email")({
   head: () => ({
